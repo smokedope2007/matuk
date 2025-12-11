@@ -1,0 +1,5 @@
+{% load i18n %}
+<div class="lang-switcher">
+  <a href="/?language=ru" class="lang-btn {% if LANGUAGE_CODE == 'ru' %}active{% endif %}" data-lang="ru">🇷🇺 RU</a>
+  <a href="/?language=en" class="lang-btn {% if LANGUAGE_CODE == 'en' %}active{% endif %}" data-lang="en">🇺🇸 EN</a>
+</div>

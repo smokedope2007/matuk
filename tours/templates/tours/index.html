@@ -1,0 +1,176 @@
+{% extends 'tours/base.html' %}
+{% load i18n static %}
+
+{% block content %}
+<section id="home" class="hero">
+  <div class="hero-content" data-aos="fade-up">
+    <h2>{% trans 'Откройте для себя величие США' %}</h2>
+    <p>{% trans 'Эксклюзивные туры, индивидуальные маршруты, беззаботный отдых' %}</p>
+    <a href="#booking" class="btn">{% trans 'Подобрать тур' %}</a>
+  </div>
+</section>
+
+<section id="destinations" class="destinations" data-aos="fade-up">
+  <div class="container">
+    <h2 class="section-title">{% trans 'Популярные направления' %}</h2>
+    
+    <!-- Фильтры и поиск -->
+    <div class="filters">
+      <input 
+        type="text" 
+        id="searchInput" 
+        class="search-input" 
+        placeholder="{% trans 'Поиск туров...' %}"
+      >
+      
+      <div class="filter-tags">
+        <span class="filter-tag active" data-tag="all">{% trans 'Все' %}</span>
+        <span class="filter-tag" data-tag="город">{% trans 'Город' %}</span>
+        <span class="filter-tag" data-tag="природа">{% trans 'Природа' %}</span>
+        <span class="filter-tag" data-tag="развлечения">{% trans 'Развлечения' %}</span>
+        <span class="filter-tag" data-tag="культура">{% trans 'Культура' %}</span>
+        <span class="filter-tag" data-tag="активный отдых">{% trans 'Активный отдых' %}</span>
+      </div>
+      
+      <select id="sortSelect" class="sort-select">
+        <option value="popularity">{% trans 'По популярности' %}</option>
+        <option value="price-asc">{% trans 'Цена по возрастанию' %}</option>
+        <option value="price-desc">{% trans 'Цена по убыванию' %}</option>
+        <option value="duration">{% trans 'По длительности' %}</option>
+      </select>
+    </div>
+    
+    <!-- Карточки туров -->
+    <div class="cards" id="destinationsContainer">
+      {% for dest in destinations %}
+      <div class="card destination-card"
+           data-name="{{ dest.name }}"
+           data-description="{{ dest.description }}"
+           data-popularity="{{ dest.popularity }}"
+           data-price="{{ dest.price }}"
+           data-duration="{{ dest.duration }}"
+           data-tags="{{ dest.tags|join:' ' }}"
+           data-aos="zoom-in" 
+           data-aos-delay="{{ forloop.counter0|add:'100' }}">
+        {% if dest.price %}
+        <div class="price-tag">${{ dest.price }}</div>
+        {% endif %}
+        <img src="{{ dest.image_url }}" alt="{{ dest.name }}">
+        <h3>{{ dest.name }}</h3>
+        <p>{{ dest.description }}</p>
+        
+        {% if dest.tags %}
+        <div class="card-tags">
+          {% for tag in dest.tags|slice:":3" %}
+          <span class="tag">{{ tag }}</span>
+          {% endfor %}
+          {% if dest.duration %}
+          <span class="tag">{{ dest.duration }} {% trans 'дней' %}</span>
+          {% endif %}
+        </div>
+        {% endif %}
+        
+        <div style="margin-top: 15px;">
+          <button class="btn" style="width: 100%; padding: 10px;" 
+                  onclick="document.getElementById('booking').scrollIntoView({behavior: 'smooth'})">
+            {% trans 'Забронировать' %}
+          </button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="advantages" class="advantages" data-aos="fade-up">
+  <div class="container">
+    <h2 class="section-title">{% trans 'Почему выбирают нас' %}</h2>
+    <div class="features">
+      <div class="feature" data-aos="fade-right">
+        <div class="icon">✈️</div>
+        <h3>{% trans 'Прямые контракты' %}</h3>
+        <p>{% trans 'Работаем напрямую с отелями и авиакомпаниями — без наценок' %}</p>
+      </div>
+      <div class="feature" data-aos="fade-up">
+        <div class="icon">🛡️</div>
+        <h3>{% trans 'Страховка в подарок' %}</h3>
+        <p>{% trans 'Медицинская страховка и поддержка 24/7 включены в каждый тур' %}</p>
+      </div>
+      <div class="feature" data-aos="fade-left">
+        <div class="icon">🗺️</div>
+        <h3>{% trans 'Индивидуальные маршруты' %}</h3>
+        <p>{% trans 'От 3 до 21 дня, с гидом или самостоятельно — как вам удобно' %}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews" class="reviews" data-aos="fade-up">
+  <div class="container">
+    <h2 class="section-title">{% trans 'Отзывы наших клиентов' %}</h2>
+    <div class="slider">
+      <div class="slides" id="reviewSlides">
+        <div class="slide active">
+          <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>{% trans 'Незабываемая поездка по Западу США! Гид — просто сокровище, всё организовано идеально. Особенно впечатлил Гранд-Каньон на рассвете.' %}</p>
+            <h4>— Анна К., Москва</h4>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>{% trans 'Family trip to Florida was a dream come true — kids loved Disney, and we parents relaxed at the beach. USATravel handled visas, transfers, and even surprise birthday cake!' %}</p>
+            <h4>— Michael R., Berlin</h4>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="review-card">
+            <div class="stars">★★★★☆</div>
+            <p>{% trans 'Отличный сервис! Единственное — в отеле в Лас-Вегасе номер был поменян, но менеджер оперативно всё исправил. В целом — рекомендуем!' %}</p>
+            <h4>— Дмитрий П., Екатеринбург</h4>
+          </div>
+        </div>
+      </div>
+      <div class="slider-controls">
+        <button type="button" class="prev" onclick="changeSlide(-1)">❮</button>
+        <button type="button" class="next" onclick="changeSlide(1)">❯</button>
+      </div>
+      <div class="dots" id="slideDots"></div>
+    </div>
+  </div>
+</section>
+
+<section id="booking" class="booking" data-aos="fade-up">
+  <div class="container">
+    <h2 class="section-title">{% trans 'Забронируйте тур' %}</h2>
+    <form class="form" method="post" action="{% url 'success_page' %}">
+      {% csrf_token %}
+      {{ form.name }}
+      {{ form.email }}
+      {{ form.destination }}
+      {{ form.travel_date }}
+      {{ form.participants }}
+      <button type="submit" class="btn">{% trans 'Отправить запрос' %}</button>
+    </form>
+  </div>
+</section>
+
+<section class="map-section" data-aos="fade-up">
+  <div class="container">
+    <h2 class="section-title">{% trans 'Наши офисы и популярные маршруты' %}</h2>
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224396.0570331624!2d-74.2598655!3d40.7064465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sru!4v1717065385039!5m2!1sen!2sru"
+        width="100%"
+        height="450"
+        style="border:0; border-radius: 12px;"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+    <p class="map-note">{% trans '📍 Основной офис — Нью-Йорк. Представительства в Москве, Берлине и Дубае.' %}</p>
+  </div>
+</section>
+{% endblock %}

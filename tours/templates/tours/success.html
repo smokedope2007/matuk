@@ -1,0 +1,29 @@
+{% extends 'tours/base.html' %}
+{% load i18n static %}
+
+{% block content %}
+<section class="hero" style="min-height: 60vh; display: flex; align-items: center;">
+  <div class="hero-content" data-aos="fade-up">
+    <h2 style="color: var(--accent);">✅ {% trans 'Заявка успешно отправлена!' %}</h2>
+    <p style="font-size: 1.3rem;">{% trans 'Спасибо за вашу заявку' %}, {{ data.name }}!</p>
+    
+    <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: var(--radius); margin: 2rem 0; text-align: left;">
+      <h3>{% trans 'Детали вашей заявки:' %}</h3>
+      <p><strong>{% trans 'Имя:' %}</strong> {{ data.name }}</p>
+      <p><strong>Email:</strong> {{ data.email }}</p>
+      <p><strong>{% trans 'Направление:' %}</strong> {{ data.destination }}</p>
+      <p><strong>{% trans 'Дата тура:' %}</strong> {{ data.travel_date }}</p>
+      {% if data.participants %}
+      <p><strong>{% trans 'Участников:' %}</strong> {{ data.participants }}</p>
+      {% endif %}
+    </div>
+    
+    <p>{% trans 'Наш менеджер свяжется с вами в течение 24 часов для уточнения деталей.' %}</p>
+    
+    <div style="display: flex; gap: 1rem; margin-top: 2rem; justify-content: center;">
+      <a href="/" class="btn">{% trans 'На главную' %}</a>
+      <a href="#destinations" class="btn" style="background: var(--secondary);">{% trans 'Посмотреть другие туры' %}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

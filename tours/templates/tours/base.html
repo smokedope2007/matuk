@@ -1,0 +1,31 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" data-aos-easing="ease" data-aos-duration="800" data-aos-delay="0">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="{% trans 'USATravel — туры по США: Нью-Йорк, Лас-Вегас, Гранд-Каньон. Индивидуальные маршруты, прямые контракты, страховка в подарок.' %}">
+  <title>USATravel — {% trans 'Ваш проводник по Америке' %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+  {% include 'tours/partials/_lang_switcher.html' %}
+  {% include 'tours/partials/_header.html' %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  {% include 'tours/partials/_footer.html' %}
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      AOS.init();
+    });
+  </script>
+</body>
+</html>
